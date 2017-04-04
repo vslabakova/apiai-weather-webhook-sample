@@ -30,7 +30,8 @@ def processRequest(req):
     url_query = makeQuery(req)
     if url_query is None:
         return {}
-    final_url = baseurl + urlencode({url_query})
+    #final_url = baseurl + urlencode({url_query})
+    final_url = "https://www.expertise.com/api/v1.0/directories/ga/atlanta/flooring"
     result = urlopen(final_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
@@ -39,43 +40,16 @@ def makeQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
     state = parameters.get("state")
-    city = parameters.get("geo-city")
+    city = parameters.get("city")
     vert = parameters.get("profession")
     if state is None:
         return None
     
     return state + "/" + city + "/" + vert
 def makeWebhookResult(data):
-    query = data.get('query')
-    if query is None:
-        return { Headers:
-Content-type: application/json
 
-Body:
-{
-"speech": "Barack Hussein Obama II is the 44th and current President of the United States.",
-"displayText": "Barack Hussein Obama II is the 44th and current President of the United States, and the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University   and Harvard Law School, where ",
-"data": {...},
-"contextOut": [...],
-"source": "DuckDuckGo"
-}}
-    result = query.get('results')
-    if result is None:
-        return {}
-    channel = result.get('channel')
-    if channel is None:
-        return {}
-    item = channel.get('item')
-    location = channel.get('location')
-    units = channel.get('units')
-    if (location is None) or (item is None) or (units is None):
-        return {}
-    condition = item.get('condition')
-    if condition is None:
-        return {}
     # print(json.dumps(item, indent=4))
-    speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
-             ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
+    speech = "Today in "
     print("Response:")
     print(speech)
     return {
