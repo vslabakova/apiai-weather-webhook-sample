@@ -51,9 +51,6 @@ def makeWebhookResult(data):
     metro = data.get('metro')
     if metro is None:
         return {}
-
-    
-    
     
     # print(json.dumps(item, indent=4))
     speech = "The best" + metro.get('name')
