@@ -51,14 +51,12 @@ def makeWebhookResult(data):
     metro = data.get('metro')
     if metro is None:
         return {}
-    vertical = data.get('vertical')
-    if vertical is None:
-        return {}
+
     
     
     
     # print(json.dumps(item, indent=4))
-    speech = "The best" + vertical.get('profession') + "in" + metro.get('name') + "is"
+    speech = "The best" + metro.get('name')
     print("Response:")
     print(speech)
     return {
