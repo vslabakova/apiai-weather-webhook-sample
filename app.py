@@ -48,19 +48,17 @@ def makeQuery(req):
     return state + "/" + city + "/" + vert
 
 def makeWebhookResult(data):
-    providers = data.get('providers')
-    if providers is None:
-        return {
-        "speech": "Not Today",
-        "displayText": "Not Today",
-        # "data": data,
-        # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
-    }
+    metro = data.get('metro')
+    if metro is None:
+        return {}
+    vertical = data.get('vertical')
+    if vertical is None:
+        return {}
+    
     
     
     # print(json.dumps(item, indent=4))
-    speech = "Today in" + providers.get('business_name')
+    speech = "The best" + vertical.get('profession') + "in" + metro.get('name') + "is"
     print("Response:")
     print(speech)
     return {
