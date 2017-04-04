@@ -50,10 +50,10 @@ def makeQuery(req):
 def makeWebhookResult(data):
     providers = data.get('providers')
     if providers is None:
-        return {}
+        return { "no response"}
     business_name = providers.get('business_name')
     if business_name is None:
-        return {}
+        return { "no response"}
     
     # print(json.dumps(item, indent=4))
     speech = "Today in " + providers.get('business_name') 
