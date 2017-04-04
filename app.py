@@ -26,7 +26,7 @@ def webhook():
 def processRequest(req):
     if req.get("result").get("action") != "expertiseProfessionSearch":
         return { "no match" }
-    baseurl = "https://requestb.in/16op1y91?tg"
+    baseurl = "https://www.expertise.com/api/v1.0/directories/"
     url_query = makeQuery(req)
     if url_query is None:
         return {}
@@ -48,7 +48,17 @@ def makeQuery(req):
 def makeWebhookResult(data):
     query = data.get('query')
     if query is None:
-        return {}
+        return { Headers:
+Content-type: application/json
+
+Body:
+{
+"speech": "Barack Hussein Obama II is the 44th and current President of the United States.",
+"displayText": "Barack Hussein Obama II is the 44th and current President of the United States, and the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University   and Harvard Law School, where ",
+"data": {...},
+"contextOut": [...],
+"source": "DuckDuckGo"
+}}
     result = query.get('results')
     if result is None:
         return {}
