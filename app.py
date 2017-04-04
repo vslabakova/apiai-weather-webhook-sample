@@ -25,12 +25,12 @@ def webhook():
     return r
 def processRequest(req):
     if req.get("result").get("action") != "expertiseProfessionSearch":
-        return {}
-    baseurl = "https://requestb.in/16op1y91?"
+        return { "no match" }
+    baseurl = "https://requestb.in/16op1y91?tg"
     url_query = makeQuery(req)
     if url_query is None:
         return {}
-    final_url = baseurl + urlencode({url_query}) + "&format=json"
+    final_url = baseurl + urlencode({url_query})
     result = urlopen(final_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
