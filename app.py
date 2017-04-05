@@ -47,6 +47,13 @@ def processRequest(req):
             return None
         
         return state + "/" + city + "/" + vert
+
+    def makeSpeech(req):
+        if req.get("result").get("action") = "expertiseProfessionSearch":
+            words = "The top three providers in your area are " + providers[0].get('business_name') + ", " + providers[1].get('business_name') + ", and " + providers[2].get('business_name') + "."
+        elif req.get("result").get("action") = "weathertest.phone":
+            words = providers[0].get('phone')
+        return words
     def makeWebhookResult(data):
         providers = data.get('providers')
         if providers is None:
@@ -54,14 +61,6 @@ def processRequest(req):
         
         # print(json.dumps(item, indent=4))
         speech = makeSpeech(req)
-    def makeSpeech(req):
-        if req.get("result").get("action") = "expertiseProfessionSearch":
-            words = "The top three providers in your area are " + providers[0].get('business_name') + ", " + providers[1].get('business_name') + ", and " + providers[2].get('business_name') + "."
-        elif req.get("result").get("action") = "weathertest.phone":
-            words = providers[0].get('phone')
-        return { words}
-    
-         
         print("Response:")
         print(speech)
         return {
