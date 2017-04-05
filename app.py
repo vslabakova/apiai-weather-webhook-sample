@@ -26,12 +26,7 @@ def webhook():
 def processRequest(req):
     if req.get("result").get("action") is None:
     # != "expertiseProfessionSearch":
-        return { 
-        "speech": providers[0].get('phone'),
-        "displayText": providers[0].get('phone'),
-        # "data": data,
-        # "contextOut": [],
-        "source": "apiai-weather-webhook-sample" }
+        return {}
     baseurl = "https://www.expertise.com/api/v1.0/directories/"
     url_query = makeQuery(req)
     if url_query is None:
@@ -59,7 +54,7 @@ def makeWebhookResult(data):
         return {}
     
     # print(json.dumps(item, indent=4))
-    speech = "The top three providers in your area are " + providers[0].get('business_name') + ", " + providers[1].get('business_name') + ", and " + providers[2].get('business_name') + "." 
+    speech = "The top three providers in your area are " + providers[0].get('business_name') + ", " + providers[1].get('business_name') + ", and " + providers[2].get('business_name') + "." if req.get("result").get("action") = "expertiseProfessionSearch" else "0"
     print("Response:")
     print(speech)
     return {
@@ -69,6 +64,13 @@ def makeWebhookResult(data):
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
     }
+
+        "speech": providers[0].get('phone'),
+        "displayText": providers[0].get('phone'),
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-weather-webhook-sample" 
+
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     print("Starting app on port %d" % port)
