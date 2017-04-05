@@ -25,13 +25,19 @@ def webhook():
     return r
 def processRequest(req):
     if req.get("result").get("action") != "expertiseProfessionSearch":
-        return { "no match" }
+        return { 
+        "speech": providers[0].get('phone'),
+        "displayText": providers[0].get('phone'),
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-weather-webhook-sample" }
     baseurl = "https://www.expertise.com/api/v1.0/directories/"
     url_query = makeQuery(req)
     if url_query is None:
         return {}
+    final_url = baseurl + url_query
     #final_url = baseurl + urlencode({url_query})
-    final_url = "https://www.expertise.com/api/v1.0/directories/ga/atlanta/flooring"
+    #final_url = "https://www.expertise.com/api/v1.0/directories/ga/atlanta/flooring"
     result = urlopen(final_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
@@ -46,14 +52,13 @@ def makeQuery(req):
         return None
     
     return state + "/" + city + "/" + vert
-
 def makeWebhookResult(data):
-    metro = data.get('metro')
-    if metro is None:
+    providers = data.get('providers')
+    if providers is None:
         return {}
     
     # print(json.dumps(item, indent=4))
-    speech = "The best" + metro.get('name') + vert
+    speech = "The top three providers in your area are " + providers[0].get('business_name') + ", " + providers[1].get('business_name') + ", and " + providers[2].get('business_name') + "." 
     print("Response:")
     print(speech)
     return {
